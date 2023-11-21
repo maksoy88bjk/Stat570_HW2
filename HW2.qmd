@@ -1,0 +1,136 @@
+---
+title: "15.6.3 Creating a pattern with code"
+author: "Mehmet AKSOY"
+format: html
+editor: visual
+---
+
+## Chapter from the "R for Data Science" Book
+
+In this part we are going to try to generate a pattern with coding. Firstly, we want to find red, blue and green color words in sentences data. We need to use double backslash (\\\\b) for alternation combine because, if we don't use (\\\\b), we face with some words which include color words but these are not color. For example, reared scared.
+
+```{r, message=FALSE, warning=FALSE, error=FALSE}
+library(tidyverse)
+library(babynames)
+str_view(sentences, "\\b(red|green|blue)\\b")
+```
+
+However, in this part we want to create pattern by code. Thus, we should create a color vector. As you may remember, we use *str_flatten* function to paste characters with a specific separator. Additionally, str_c can be used like as paste function.
+
+```{r}
+rgb <- c("red", "green", "blue")
+str_c("\\b(", str_flatten(rgb, "|"), ")\\b")
+```
+
+We can make this pattern more comprehensive if we have a color list. Luckily we already have this list. Lets make another vector for the color list
+
+```{r}
+str_view(colors())
+cols <- colors()
+```
+
+However, there are too much color versions with numbers.
+
+```{r}
+length(cols) =  657
+```
+
+So we need to detect numbers, to eliminate them. Double backslash d (\\d) can be used to detect the numbers. It give us same color variants, we can use this info but adversely.
+
+```{r}
+str_view(cols, "\\d")
+```
+
+Here, str_detect give us result as TRUE FALSE. So we can use it inside the cols vector and we get a color list with unique variables.
+
+```{r}
+cols <- cols[!str_detect(cols, "\\d")]
+```
+
+Alternatively, we can also use numbers to eliminate color variants. There were 657 colors before our manipulation but now we have 143 colors.
+
+### My advise instead of "\\d"
+
+```{r}
+cols <- cols[!str_detect(cols, "[0-9]+")]
+length(cols) =  143
+```
+
+Finally, we can use our new color list in our code like in rgb example.
+
+```{r}
+pattern <- str_c("\\b(", str_flatten(cols, "|"), ")\\b")
+```
+
+As a result, we get sentences which contain colors.
+
+```{r}
+str_view(sentences, pattern)
+```
+
+## My Own Example
+
+I want to search *Turkish names* in the *babynames* dataset which is commonly used among R users. For this purpose, we need a list for Turkish names. Fortunately, I have found a list on internet. Firstly, system environment has to be settled with *Turkish Language* since to avoid character troubles. Additionally, the data has to be handled.
+
+```{r,  message=FALSE, warning=FALSE, error=FALSE}
+
+library(rvest)
+Sys.setlocale(category = "LC_ALL", locale = "Turkish")
+
+turkce <- read_html("https://gist.githubusercontent.com/emrekgn/b4049851c88e328c065a/raw/db67136bf7431be047a2faaef95eff5bd5df2f03/isimler")
+
+turkce <- html_elements(turkce, css = "body") |>  
+  html_text(trim = TRUE) |> 
+  str_split("\n") |> 
+  unlist()
+
+```
+
+I generated the list but there is another problem: all letters of names are uppercase but not in babynames data. Thus, it has to be solved for 2446 Turkish names.
+
+```{r}
+turkce[1:30]
+length(turkce)
+
+turkce<- tolower(turkce) |> 
+  str_to_title()
+
+turkce[1:30]
+```
+
+A pattern is created by using Turkish names data-set and these are investigated in babynames data-set. The computational time took a bit long but finally the mission is accomplished and a frequency table of names is generated.
+
+```{r}
+pattern <- str_c("\\b(", str_flatten(turkce, "|"), ")\\b")
+
+babynames |> 
+  group_by(name) |> 
+  filter(str_detect(name, pattern)) |> 
+  count(name, wt = n, sort = TRUE)
+```
+
+Last but not least, I noticed that first four name is not very common in Türkiye so these names are filtered from our pattern. Finally, the Turkish name table is obtained with their frequencies and *Ali* is defined as the most common name. Surprisingly, my name is not in first ten names although it is the most used name in Türkiye. *Mehmet* is seventy second with *653* frequency in our final list among *246* Turkish names.
+
+```{r}
+turkce<- turkce[!str_detect(turkce, str_flatten(c("Maria", "Diana", "Hazel", "Esmeralda"), "|"))]
+
+pattern <- str_c("\\b(", str_flatten(turkce, "|"), ")\\b")
+
+babynames |> 
+  group_by(name) |> 
+  filter(str_detect(name, pattern)) |> 
+  count(name, wt = n, sort = TRUE)
+```
+
+I created a graph for my name to see usage of it with respect to years just for fun. The graph shows that the use of my name in the babynames data-set has gradually increased after the 2000s.
+
+```{r, message=FALSE, warning=FALSE, error=FALSE}
+
+babynames |> 
+    filter(str_detect(name, "\\b(Mehmet)\\b")) |> 
+    ggplot(aes(x = year, y = n)) + 
+    geom_line(colour="blue", linewidth=2) + 
+    theme_bw() + 
+    labs(x="Years",y="Number of Names") + ggtitle("Mehmet in babynames") + 
+    geom_smooth(colour= "red", linewidth=2)
+```

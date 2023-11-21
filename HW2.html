@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Mehmet AKSOY">
+
+<title>15.6.3 Creating a pattern with code</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="HW2_files/libs/clipboard/clipboard.min.js"></script>
+<script src="HW2_files/libs/quarto-html/quarto.js"></script>
+<script src="HW2_files/libs/quarto-html/popper.min.js"></script>
+<script src="HW2_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="HW2_files/libs/quarto-html/anchor.min.js"></script>
+<link href="HW2_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="HW2_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="HW2_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="HW2_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="HW2_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body class="fullcontent">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">15.6.3 Creating a pattern with code</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Mehmet AKSOY </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="chapter-from-the-r-for-data-science-book" class="level2">
+<h2 class="anchored" data-anchor-id="chapter-from-the-r-for-data-science-book">Chapter from the “R for Data Science” Book</h2>
+<p>In this part we are going to try to generate a pattern with coding. Firstly, we want to find red, blue and green color words in sentences data. We need to use double backslash (\\b) for alternation combine because, if we don’t use (\\b), we face with some words which include color words but these are not color. For example, reared scared.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(babynames)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">str_view</span>(sentences, <span class="st">"</span><span class="sc">\\</span><span class="st">b(red|green|blue)</span><span class="sc">\\</span><span class="st">b"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  [2] │ Glue the sheet to the dark &lt;blue&gt; background.
+ [26] │ Two &lt;blue&gt; fish swam in the tank.
+ [92] │ A wisp of cloud hung in the &lt;blue&gt; air.
+[148] │ The spot on the blotter was made by &lt;green&gt; ink.
+[160] │ The sofa cushion is &lt;red&gt; and of light weight.
+[174] │ The sky that morning was clear and bright &lt;blue&gt;.
+[204] │ A &lt;blue&gt; crane is a tall wading bird.
+[217] │ It is hard to erase &lt;blue&gt; or &lt;red&gt; ink.
+[224] │ The lamp shone with a steady &lt;green&gt; flame.
+[247] │ The box is held by a bright &lt;red&gt; snapper.
+[256] │ The houses are built of &lt;red&gt; clay bricks.
+[274] │ The &lt;red&gt; tape bound the smuggled food.
+[288] │ Hedge apples may stain your hands &lt;green&gt;.
+[302] │ The plant grew large and &lt;green&gt; in the window.
+[330] │ Bathe and relax in the cool &lt;green&gt; grass.
+[368] │ The lake sparkled in the &lt;red&gt; hot sun.
+[372] │ Mark the spot with a sign painted &lt;red&gt;.
+[452] │ The couch cover and hall drapes were &lt;blue&gt;.
+[491] │ A man in a &lt;blue&gt; sweater sat at the desk.
+[551] │ The small &lt;red&gt; neon lamp went out.
+... and 6 more</code></pre>
+</div>
+</div>
+<p>However, in this part we want to create pattern by code. Thus, we should create a color vector. As you may remember, we use <em>str_flatten</em> function to paste characters with a specific separator. Additionally, str_c can be used like as paste function.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>rgb <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"red"</span>, <span class="st">"green"</span>, <span class="st">"blue"</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">str_c</span>(<span class="st">"</span><span class="sc">\\</span><span class="st">b("</span>, <span class="fu">str_flatten</span>(rgb, <span class="st">"|"</span>), <span class="st">")</span><span class="sc">\\</span><span class="st">b"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "\\b(red|green|blue)\\b"</code></pre>
+</div>
+</div>
+<p>We can make this pattern more comprehensive if we have a color list. Luckily we already have this list. Lets make another vector for the color list</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str_view</span>(<span class="fu">colors</span>())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] │ white
+ [2] │ aliceblue
+ [3] │ antiquewhite
+ [4] │ antiquewhite1
+ [5] │ antiquewhite2
+ [6] │ antiquewhite3
+ [7] │ antiquewhite4
+ [8] │ aquamarine
+ [9] │ aquamarine1
+[10] │ aquamarine2
+[11] │ aquamarine3
+[12] │ aquamarine4
+[13] │ azure
+[14] │ azure1
+[15] │ azure2
+[16] │ azure3
+[17] │ azure4
+[18] │ beige
+[19] │ bisque
+[20] │ bisque1
+... and 637 more</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>cols <span class="ot">&lt;-</span> <span class="fu">colors</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>However, there are too much color versions with numbers.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(cols) <span class="ot">=</span>  <span class="dv">657</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>So we need to detect numbers, to eliminate them. Double backslash d (\d) can be used to detect the numbers. It give us same color variants, we can use this info but adversely.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str_view</span>(cols, <span class="st">"</span><span class="sc">\\</span><span class="st">d"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [4] │ antiquewhite&lt;1&gt;
+ [5] │ antiquewhite&lt;2&gt;
+ [6] │ antiquewhite&lt;3&gt;
+ [7] │ antiquewhite&lt;4&gt;
+ [9] │ aquamarine&lt;1&gt;
+[10] │ aquamarine&lt;2&gt;
+[11] │ aquamarine&lt;3&gt;
+[12] │ aquamarine&lt;4&gt;
+[14] │ azure&lt;1&gt;
+[15] │ azure&lt;2&gt;
+[16] │ azure&lt;3&gt;
+[17] │ azure&lt;4&gt;
+[20] │ bisque&lt;1&gt;
+[21] │ bisque&lt;2&gt;
+[22] │ bisque&lt;3&gt;
+[23] │ bisque&lt;4&gt;
+[27] │ blue&lt;1&gt;
+[28] │ blue&lt;2&gt;
+[29] │ blue&lt;3&gt;
+[30] │ blue&lt;4&gt;
+... and 494 more</code></pre>
+</div>
+</div>
+<p>Here, str_detect give us result as TRUE FALSE. So we can use it inside the cols vector and we get a color list with unique variables.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>cols <span class="ot">&lt;-</span> cols[<span class="sc">!</span><span class="fu">str_detect</span>(cols, <span class="st">"</span><span class="sc">\\</span><span class="st">d"</span>)]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Alternatively, we can also use numbers to eliminate color variants. There were 657 colors before our manipulation but now we have 143 colors.</p>
+<section id="my-advise-instead-of-d" class="level3">
+<h3 class="anchored" data-anchor-id="my-advise-instead-of-d">My advise instead of “\d”</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>cols <span class="ot">&lt;-</span> cols[<span class="sc">!</span><span class="fu">str_detect</span>(cols, <span class="st">"[0-9]+"</span>)]</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(cols) <span class="ot">=</span>  <span class="dv">143</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Finally, we can use our new color list in our code like in rgb example.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>pattern <span class="ot">&lt;-</span> <span class="fu">str_c</span>(<span class="st">"</span><span class="sc">\\</span><span class="st">b("</span>, <span class="fu">str_flatten</span>(cols, <span class="st">"|"</span>), <span class="st">")</span><span class="sc">\\</span><span class="st">b"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>As a result, we get sentences which contain colors.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str_view</span>(sentences, pattern)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  [2] │ Glue the sheet to the dark &lt;blue&gt; background.
+ [12] │ A rod is used to catch &lt;pink&gt; &lt;salmon&gt;.
+ [26] │ Two &lt;blue&gt; fish swam in the tank.
+ [66] │ Cars and busses stalled in &lt;snow&gt; drifts.
+ [92] │ A wisp of cloud hung in the &lt;blue&gt; air.
+[112] │ Leaves turn &lt;brown&gt; and &lt;yellow&gt; in the fall.
+[148] │ The spot on the blotter was made by &lt;green&gt; ink.
+[149] │ Mud was spattered on the front of his &lt;white&gt; shirt.
+[160] │ The sofa cushion is &lt;red&gt; and of light weight.
+[167] │ The office paint was a dull, sad &lt;tan&gt;.
+[174] │ The sky that morning was clear and bright &lt;blue&gt;.
+[201] │ The &lt;brown&gt; house was on fire to the attic.
+[204] │ A &lt;blue&gt; crane is a tall wading bird.
+[217] │ It is hard to erase &lt;blue&gt; or &lt;red&gt; ink.
+[221] │ A pencil with &lt;black&gt; lead writes best.
+[224] │ The lamp shone with a steady &lt;green&gt; flame.
+[230] │ Slash the &lt;gold&gt; cloth into fine ribbons.
+[234] │ They floated on the raft to sun their &lt;white&gt; backs.
+[246] │ The birch looked stark &lt;white&gt; and lonesome.
+[247] │ The box is held by a bright &lt;red&gt; snapper.
+... and 43 more</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="my-own-example" class="level2">
+<h2 class="anchored" data-anchor-id="my-own-example">My Own Example</h2>
+<p>I want to search <em>Turkish names</em> in the <em>babynames</em> dataset which is commonly used among R users. For this purpose, we need a list for Turkish names. Fortunately, I have found a list on internet. Firstly, system environment has to be settled with <em>Turkish Language</em> since to avoid character troubles. Additionally, the data has to be handled.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(rvest)</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">Sys.setlocale</span>(<span class="at">category =</span> <span class="st">"LC_ALL"</span>, <span class="at">locale =</span> <span class="st">"Turkish"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "LC_COLLATE=Turkish_Türkiye.1254;LC_CTYPE=Turkish_Türkiye.1254;LC_MONETARY=Turkish_Türkiye.1254;LC_NUMERIC=C;LC_TIME=Turkish_Türkiye.1254"</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>turkce <span class="ot">&lt;-</span> <span class="fu">read_html</span>(<span class="st">"https://gist.githubusercontent.com/emrekgn/b4049851c88e328c065a/raw/db67136bf7431be047a2faaef95eff5bd5df2f03/isimler"</span>)</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>turkce <span class="ot">&lt;-</span> <span class="fu">html_elements</span>(turkce, <span class="at">css =</span> <span class="st">"body"</span>) <span class="sc">|&gt;</span>  </span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_text</span>(<span class="at">trim =</span> <span class="cn">TRUE</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_split</span>(<span class="st">"</span><span class="sc">\n</span><span class="st">"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unlist</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>I generated the list but there is another problem: all letters of names are uppercase but not in babynames data. Thus, it has to be solved for 2446 Turkish names.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>turkce[<span class="dv">1</span><span class="sc">:</span><span class="dv">30</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "JALE"          "ALİ"           "MAHMUT"        "MANSUR KÜRŞAD"
+ [5] "GAMZE"         "MİRAÇ"         "YÜCEL"         "KUBİLAY"      
+ [9] "HAYATİ"        "BEDRİYE MÜGE"  "BİRSEN"        "SERDAL"       
+[13] "BÜNYAMİN"      "ÖZGÜR"         "FERDİ"         "REYHAN"       
+[17] "İLHAN"         "GÜLŞAH"        "NALAN"         "SEMİH"        
+[21] "ERGÜN"         "FATİH"         "ŞENAY"         "SERKAN"       
+[25] "EMRE"          "BAHATTİN"      "IRAZCA"        "HATİCE"       
+[29] "BARIŞ"         "REZAN"        </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">length</span>(turkce)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 2446</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>turkce<span class="ot">&lt;-</span> <span class="fu">tolower</span>(turkce) <span class="sc">|&gt;</span> </span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_to_title</span>()</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>turkce[<span class="dv">1</span><span class="sc">:</span><span class="dv">30</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "Jale"          "Ali"           "Mahmut"        "Mansur Kürşad"
+ [5] "Gamze"         "Miraç"         "Yücel"         "Kubilay"      
+ [9] "Hayati"        "Bedriye Müge"  "Birsen"        "Serdal"       
+[13] "Bünyamin"      "Özgür"         "Ferdi"         "Reyhan"       
+[17] "Ilhan"         "Gülşah"        "Nalan"         "Semih"        
+[21] "Ergün"         "Fatih"         "Şenay"         "Serkan"       
+[25] "Emre"          "Bahattin"      "Irazca"        "Hatice"       
+[29] "Bariş"         "Rezan"        </code></pre>
+</div>
+</div>
+<p>A pattern is created by using Turkish names data-set and these are investigated in babynames data-set. The computational time took a bit long but finally the mission is accomplished and a frequency table of names is generated.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>pattern <span class="ot">&lt;-</span> <span class="fu">str_c</span>(<span class="st">"</span><span class="sc">\\</span><span class="st">b("</span>, <span class="fu">str_flatten</span>(turkce, <span class="st">"|"</span>), <span class="st">")</span><span class="sc">\\</span><span class="st">b"</span>)</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>babynames <span class="sc">|&gt;</span> </span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(name) <span class="sc">|&gt;</span> </span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">str_detect</span>(name, pattern)) <span class="sc">|&gt;</span> </span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(name, <span class="at">wt =</span> n, <span class="at">sort =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 250 x 2
+# Groups:   name [250]
+   name           n
+   &lt;chr&gt;      &lt;int&gt;
+ 1 Maria     547562
+ 2 Diana     358861
+ 3 Hazel     258118
+ 4 Esmeralda  45101
+ 5 Ali        35598
+ 6 Selma      26629
+ 7 Ayla       18335
+ 8 Ibrahim    11543
+ 9 Aylin      10872
+10 Yusuf       6984
+# i 240 more rows</code></pre>
+</div>
+</div>
+<p>Last but not least, I noticed that first four name is not very common in Türkiye so these names are filtered from our pattern. Finally, the Turkish name table is obtained with their frequencies and <em>Ali</em> is defined as the most common name. Surprisingly, my name is not in first ten names although it is the most used name in Türkiye. <em>Mehmet</em> is seventy second with <em>653</em> frequency in our final list among <em>246</em> Turkish names.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>turkce<span class="ot">&lt;-</span> turkce[<span class="sc">!</span><span class="fu">str_detect</span>(turkce, <span class="fu">str_flatten</span>(<span class="fu">c</span>(<span class="st">"Maria"</span>, <span class="st">"Diana"</span>, <span class="st">"Hazel"</span>, <span class="st">"Esmeralda"</span>), <span class="st">"|"</span>))]</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>pattern <span class="ot">&lt;-</span> <span class="fu">str_c</span>(<span class="st">"</span><span class="sc">\\</span><span class="st">b("</span>, <span class="fu">str_flatten</span>(turkce, <span class="st">"|"</span>), <span class="st">")</span><span class="sc">\\</span><span class="st">b"</span>)</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>babynames <span class="sc">|&gt;</span> </span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(name) <span class="sc">|&gt;</span> </span>
+<span id="cb27-7"><a href="#cb27-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">str_detect</span>(name, pattern)) <span class="sc">|&gt;</span> </span>
+<span id="cb27-8"><a href="#cb27-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">count</span>(name, <span class="at">wt =</span> n, <span class="at">sort =</span> <span class="cn">TRUE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 246 x 2
+# Groups:   name [246]
+   name         n
+   &lt;chr&gt;    &lt;int&gt;
+ 1 Ali      35598
+ 2 Selma    26629
+ 3 Ayla     18335
+ 4 Ibrahim  11543
+ 5 Aylin    10872
+ 6 Yusuf     6984
+ 7 Abdullah  6875
+ 8 Leyla     6787
+ 9 Hamza     6783
+10 Nevin     6083
+# i 236 more rows</code></pre>
+</div>
+</div>
+<p>I created a graph for my name to see usage of it with respect to years just for fun. The graph shows that the use of my name in the babynames data-set has gradually increased after the 2000s.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>babynames <span class="sc">|&gt;</span> </span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(<span class="fu">str_detect</span>(name, <span class="st">"</span><span class="sc">\\</span><span class="st">b(Mehmet)</span><span class="sc">\\</span><span class="st">b"</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> n)) <span class="sc">+</span> </span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_line</span>(<span class="at">colour=</span><span class="st">"blue"</span>, <span class="at">linewidth=</span><span class="dv">2</span>) <span class="sc">+</span> </span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_bw</span>() <span class="sc">+</span> </span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">x=</span><span class="st">"Years"</span>,<span class="at">y=</span><span class="st">"Number of Names"</span>) <span class="sc">+</span> <span class="fu">ggtitle</span>(<span class="st">"Mehmet in babynames"</span>) <span class="sc">+</span> </span>
+<span id="cb29-7"><a href="#cb29-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_smooth</span>(<span class="at">colour=</span> <span class="st">"red"</span>, <span class="at">linewidth=</span><span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="HW2_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
